@@ -378,7 +378,7 @@ function boom(x, y, k) {
 
 // ---------- main loop ----------
 const qs = new URLSearchParams(location.search);
-const frozen = qs.has('t') ? parseFloat(qs.get('t')) : null;
+let frozen = qs.has('t') ? parseFloat(qs.get('t')) : null;
 let start = performance.now(), paused = false, pauseAt = 0;
 cv.addEventListener('click', () => { start = performance.now(); paused = false; });
 addEventListener('keydown', e => {
@@ -444,6 +444,7 @@ function frame(now) {
   if (frozen === null) requestAnimationFrame(frame);
 }
 requestAnimationFrame(frame);
+window.__renderAt = v => { frozen = v; frame(0); };
 </script>
 </body>
 </html>
